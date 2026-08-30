@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { UserRecord } from '@/lib/users/user-repository'
 
 export const createUserSchema = z
   .object({
@@ -18,14 +19,6 @@ export const userSchema = z
   .strict()
 
 export const userListSchema = z.array(userSchema).max(100)
-
-interface UserRecord {
-  createdAt: Date
-  email: string
-  id: string
-  name: null | string
-  updatedAt: Date
-}
 
 export function toUserResponse(user: UserRecord) {
   return userSchema.parse({

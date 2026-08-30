@@ -1,18 +1,16 @@
 import { db } from '@/lib/db'
-import { publicUserSelect } from '@/lib/users'
+import { createPrismaUserRepository } from '@/lib/users/prisma-user-repository'
 import { toUserResponse, userListSchema } from '@/lib/validations/user'
 
 export const dynamic = 'force-dynamic'
+
+const userRepository = createPrismaUserRepository(db)
 
 export default async function Home() {
   let users
 
   try {
-    const records = await db.user.findMany({
-      orderBy: { createdAt: 'desc' },
-      select: publicUserSelect,
-      take: 10,
-    })
+    const records = await userRepository.listNewest(10)
     users = userListSchema.parse(records.map((record) => toUserResponse(record)))
   } catch (error: unknown) {
     throw new Error('Failed to load users from the database', { cause: error })
