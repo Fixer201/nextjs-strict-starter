@@ -1,0 +1,4 @@
+[test]
+coverageSkipTestFiles = true
+coverageThreshold = { lines = 0.80, functions = 0.80 }
+coveragePathIgnorePatterns = ["src/generated/**", "src/app/layout.tsx", "src/app/error.tsx"]

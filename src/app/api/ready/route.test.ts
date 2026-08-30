@@ -2,15 +2,23 @@ import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test'
 import type { ReadinessProbe } from '@/lib/readiness'
 
 mock.module('server-only', () => ({}))
-process.env['DATABASE_URL'] ??= 'postgresql://postgres:postgres@localhost:5432/test'
+const databaseCheck = mock(() => Promise.resolve([{ result: 1 }]))
+mock.module('@/lib/db', () => ({ db: { $queryRaw: databaseCheck } }))
 
-const { readinessResponse } = await import('./route')
+const { GET, readinessResponse } = await import('./route')
 
 afterEach(() => {
   mock.restore()
 })
 
 describe('readinessResponse', () => {
+  it('uses the production database probe', async () => {
+    const response = await GET()
+
+    expect(response.status).toBe(200)
+    expect(databaseCheck).toHaveBeenCalled()
+  })
+
   it('returns a non-cacheable ready response', async () => {
     const probe: ReadinessProbe = { check: () => Promise.resolve() }
     const response = await readinessResponse(probe)

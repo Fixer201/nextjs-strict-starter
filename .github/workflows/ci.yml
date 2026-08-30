@@ -23,7 +23,7 @@ env:
 
 jobs:
   quality:
-    name: Format, lint, types, tests, and dead code
+    name: Quality checks
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -35,12 +35,7 @@ jobs:
           bun-version: 1.4.0
       - run: bun ci
       - run: bun run db:generate
-      - run: bun run format
-      - run: bun run lint:ci
-      - run: bun run typecheck
-      - run: bun run test:coverage
-      - run: bun run knip
-      - run: bun run db:validate
+      - run: bun run check
 
   build:
     name: Production build

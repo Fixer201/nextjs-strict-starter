@@ -13,16 +13,8 @@ pre-commit:
 pre-push:
   parallel: false
   commands:
-    knip:
-      run: bun run knip
-    typecheck:
-      run: bun run typecheck
-    test:
-      run: bun run test
-    prisma-validate:
-      run: bun run db:validate
-    build:
-      run: bun run build
+    verify:
+      run: bun run verify
 post-merge:
   commands:
     install:
