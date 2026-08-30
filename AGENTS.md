@@ -7,28 +7,29 @@ toolchain; when commands or architecture change, update this file and `README.md
 
 | Concern        | Tool / command                              |
 | -------------- | ------------------------------------------- |
-| Runtime        | Node.js 24+, npm 11+                        |
+| Runtime        | Node.js 24+, Bun 1.4+                       |
 | Framework      | Next.js App Router, React Server Components |
-| Types          | `npm run typecheck`                         |
-| Lint           | `npm run lint:ci`                           |
-| Format         | `npm run format` / `npm run format:fix`     |
-| Tests          | `npm test` / `npm run test:coverage`        |
-| Dead code      | `npm run knip`                              |
+| Types          | `bun run typecheck`                         |
+| Lint           | `bun run lint:ci`                           |
+| Format         | `bun run format` / `bun run format:fix`     |
+| Tests          | `bun run test` / `bun run test:coverage`    |
+| Dead code      | `bun run knip`                              |
 | Database       | Prisma 7 and PostgreSQL                     |
-| Full fast gate | `npm run check`                             |
-| Production     | `npm run build`                             |
+| Full fast gate | `bun run check`                             |
+| Production     | `bun run build`                             |
 
-Use `npm install`; the dependency graph must resolve without `--legacy-peer-deps` or `--force`.
+Use `bun install`; the dependency graph must resolve without `--force`. CI uses `bun ci`, and local
+reproducibility checks use `bun install --frozen-lockfile`.
 
 ## Working sequence
 
 1. Inspect `git status --short` and preserve unrelated user changes.
-2. Copy `.env.example` to `.env` and start PostgreSQL with `npm run db:up` when database access is
+2. Copy `.env.example` to `.env` and start PostgreSQL with `bun run db:up` when database access is
    needed.
 3. Change the smallest coherent set of files.
 4. Add or update tests for behavior changes.
-5. Run `npm run format:fix`, then `npm run check`.
-6. Run `npm run build` when application, dependency, environment, or Next.js configuration changed.
+5. Run `bun run format:fix`, then `bun run check`.
+6. Run `bun run build` when application, dependency, environment, or Next.js configuration changed.
 7. For schema changes, create and commit a migration; never report schema work complete with only
    `db:push`.
 
@@ -93,9 +94,9 @@ and generated output lives in ignored `src/generated/prisma`.
 - Application code uses the singleton in `src/lib/db.ts`.
 - Direct PostgreSQL connections use `@prisma/adapter-pg`.
 - Runtime database configuration is parsed in `src/lib/env.ts`.
-- Run `npm run db:generate` after schema changes.
+- Run `bun run db:generate` after schema changes.
 - Commit both schema and generated SQL migration changes.
-- Use `npm run db:migrate:deploy` in non-development environments.
+- Use `bun run db:migrate:deploy` in non-development environments.
 - Keep database column names snake_case with Prisma `@map` where TypeScript names differ.
 
 Do not edit generated Prisma files.
@@ -123,7 +124,7 @@ necessary, prefer a typed variant API and add tests for its public combinations.
 
 ## Tests
 
-Tests use `node:test`, strict assertions, and `tsx`. Keep tests next to the code they cover using
+Tests use `bun:test` and strict assertions. Keep tests next to the code they cover using
 `*.test.ts` or `*.test.tsx`.
 
 - Test boundary normalization and rejection paths, not only happy paths.
@@ -142,13 +143,13 @@ fallbacks to a quality gate.
 
 ## Completion checklist
 
-- `npm run format` passes.
-- `npm run lint:ci` passes with zero warnings.
-- `npm run typecheck` passes.
-- `npm run test:coverage` passes.
-- `npm run knip` passes.
-- `npm run db:validate` passes.
-- `npm run build` passes when relevant.
+- `bun run format` passes.
+- `bun run lint:ci` passes with zero warnings.
+- `bun run typecheck` passes.
+- `bun run test:coverage` passes.
+- `bun run knip` passes.
+- `bun run db:validate` passes.
+- `bun run build` passes when relevant.
 - Schema changes include a migration and pass the migration workflow logic.
 - The diff contains no secrets, generated Prisma client, unsafe type escapes, or unrelated changes.
 - Documentation matches the implemented commands and behavior.

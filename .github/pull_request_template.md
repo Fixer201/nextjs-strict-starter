@@ -13,13 +13,13 @@
 
 ## Quality gates passed
 
-- [ ] `npm run format` — no formatting changes required
-- [ ] `npm run lint:ci` — 0 errors and 0 warnings
-- [ ] `npm run typecheck` — 0 type errors
-- [ ] `npm run test:coverage` — tests and thresholds pass
-- [ ] `npm run knip` — 0 dead code
-- [ ] `npm run db:validate` — schema valid
-- [ ] `npm run build` — build succeeds
+- [ ] `bun run format` — no formatting changes required
+- [ ] `bun run lint:ci` — 0 errors and 0 warnings
+- [ ] `bun run typecheck` — 0 type errors
+- [ ] `bun run test:coverage` — tests and thresholds pass
+- [ ] `bun run knip` — 0 dead code
+- [ ] `bun run db:validate` — schema valid
+- [ ] `bun run build` — build succeeds
 
 ## Security checklist
 

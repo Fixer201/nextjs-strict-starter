@@ -4,14 +4,14 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'package-lock.json'
+      - 'bun.lock'
       - 'package.json'
       - 'prisma.config.ts'
       - 'prisma/**'
   push:
     branches: [main]
     paths:
-      - 'package-lock.json'
+      - 'bun.lock'
       - 'package.json'
       - 'prisma.config.ts'
       - 'prisma/**'
@@ -51,14 +51,13 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          cache: npm
-          node-version: 24
-      - run: npm ci
-      - run: npm run db:generate
-      - run: npm run db:validate
-      - run: npm run db:migrate:deploy
-      - run: npm run db:migrate:status
+          bun-version: 1.4.0
+      - run: bun ci
+      - run: bun run db:generate
+      - run: bun run db:validate
+      - run: bun run db:migrate:deploy
+      - run: bun run db:migrate:status
       - name: Verify migration history matches the schema
-        run: npm run db:migrate:check
+        run: bun run db:migrate:check

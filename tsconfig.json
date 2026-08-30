@@ -23,7 +23,7 @@
       "@/*": ["./src/*"]
     },
 
-    "types": ["node"],
+    "types": ["bun", "node"],
 
     "noUnusedLocals": true,
     "noUnusedParameters": true,

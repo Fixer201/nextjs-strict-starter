@@ -33,7 +33,7 @@ export default async function Home() {
         {users.length === 0 ? (
           <p className="text-text">
             No users yet. Run{' '}
-            <code className="rounded bg-code-bg px-2 py-1 font-mono text-sm">npm run db:seed</code>{' '}
+            <code className="rounded bg-code-bg px-2 py-1 font-mono text-sm">bun run db:seed</code>{' '}
             to add demo data.
           </p>
         ) : (
