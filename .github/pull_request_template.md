@@ -13,13 +13,8 @@
 
 ## Quality gates passed
 
-- [ ] `bun run format` — no formatting changes required
-- [ ] `bun run lint:ci` — 0 errors and 0 warnings
-- [ ] `bun run typecheck` — 0 type errors
-- [ ] `bun run test:coverage` — tests and thresholds pass
-- [ ] `bun run knip` — 0 dead code
-- [ ] `bun run db:validate` — schema valid
-- [ ] `bun run build` — build succeeds
+- [ ] `bun run verify` — formatting, lint, types, unit coverage, dead code, Prisma schema, and build pass
+- [ ] `bun run test:integration` and `bun run db:migrate:check` pass when database code changes
 
 ## Security checklist
 

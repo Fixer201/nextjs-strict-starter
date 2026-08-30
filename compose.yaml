@@ -1,14 +1,14 @@
-name: next-linting-template
+name: nextjs-strict-starter
 
 services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_DB: next_template
+      POSTGRES_DB: nextjs_strict_starter
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d next_template']
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d nextjs_strict_starter']
       interval: 2s
       timeout: 3s
       retries: 15

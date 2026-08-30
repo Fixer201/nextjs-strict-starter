@@ -19,7 +19,7 @@ export default async function Home() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col p-8">
       <h1 className="mb-6 text-3xl font-medium tracking-tight text-text-h">
-        Next.js Linting Template
+        Next.js Strict Starter
       </h1>
       <p className="mb-8">
         Strict Next.js, Prisma, and Tailwind starter. This page reads users from PostgreSQL and

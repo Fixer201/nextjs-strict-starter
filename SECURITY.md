@@ -2,8 +2,9 @@
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for a suspected vulnerability. Use the repository's **Security →
-Report a vulnerability** form to start a private security advisory with the maintainers.
+Please do not open a public issue for a suspected vulnerability. If private vulnerability reporting
+is enabled for this repository, use **Security → Report a vulnerability** to contact the maintainers.
+Otherwise, publish a private maintainer contact before accepting external reports.
 
 Include the affected revision, reproduction steps, impact, and any suggested mitigation. A
 maintainer should acknowledge a complete report within five business days. Do not include real

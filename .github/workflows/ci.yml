@@ -17,7 +17,7 @@ permissions:
 
 env:
   DATABASE_POOL_SIZE: '2'
-  DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/next_template?schema=public
+  DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/nextjs_strict_starter?schema=public
   NEXT_TELEMETRY_DISABLED: '1'
   PRISMA_LOG_QUERIES: 'false'
 
