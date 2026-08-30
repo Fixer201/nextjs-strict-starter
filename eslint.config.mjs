@@ -7,6 +7,7 @@ import tsParser from '@typescript-eslint/parser'
 import prismaPlugin from '@v2nic/eslint-plugin-prisma'
 import noSecretsPlugin from 'eslint-plugin-no-secrets'
 import noUnsanitizedPlugin from 'eslint-plugin-no-unsanitized'
+import jsdocPlugin from 'eslint-plugin-jsdoc'
 import oxlintPlugin from 'eslint-plugin-oxlint'
 import perfectionistPlugin from 'eslint-plugin-perfectionist'
 import promisePlugin from 'eslint-plugin-promise'
@@ -40,6 +41,28 @@ export default [
       'src/generated/**',
       'next-env.d.ts',
     ],
+  },
+
+  {
+    files: ['src/lib/**/*.ts', 'src/app/api/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    plugins: { jsdoc: jsdocPlugin },
+    rules: {
+      'jsdoc/require-jsdoc': [
+        'warn',
+        {
+          contexts: ['ExportNamedDeclaration > FunctionDeclaration'],
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: false,
+          },
+        },
+      ],
+    },
   },
 
   jsPlugin.configs.recommended,

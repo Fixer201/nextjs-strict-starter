@@ -41,6 +41,12 @@ function isEmailUniqueConstraint(error: Prisma.PrismaClientKnownRequestError) {
   )
 }
 
+/**
+ * Adapts Prisma user operations to the application repository contract.
+ *
+ * @param client - Configured Prisma client used for persistence.
+ * @returns A repository that selects only public user fields and classifies duplicate emails.
+ */
 export function createPrismaUserRepository(client: PrismaClient): UserRepository {
   return {
     async create(input: CreateUserInput): Promise<UserRecord> {

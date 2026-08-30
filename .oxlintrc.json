@@ -1,6 +1,16 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["nextjs", "react", "typescript", "oxc", "jsx-a11y", "import", "unicorn", "promise"],
+  "plugins": [
+    "nextjs",
+    "react",
+    "typescript",
+    "oxc",
+    "jsx-a11y",
+    "import",
+    "unicorn",
+    "promise",
+    "jsdoc"
+  ],
   "categories": {
     "correctness": "error",
     "perf": "warn"
@@ -25,6 +35,12 @@
   "rules": {
     // ─── ESLint base (correctness) ─────────────────────────────────
     "eqeqeq": "error",
+    "jsdoc/check-tag-names": "error",
+    "jsdoc/empty-tags": "warn",
+    "jsdoc/require-param-name": "error",
+    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-returns-description": "warn",
+    "jsdoc/require-throws-description": "warn",
     "no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_" }

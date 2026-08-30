@@ -9,6 +9,13 @@ function errorResponse(error: string, status: number) {
   return NextResponse.json({ error }, { headers: NO_STORE_HEADERS, status })
 }
 
+/**
+ * Validates an HTTP request and creates a user through the injected repository.
+ *
+ * @param request - Request whose body must contain JSON user input.
+ * @param repository - User persistence boundary.
+ * @returns A non-cacheable response using the documented users API status mapping.
+ */
 export async function createUserHandler(request: Request, repository: UserRepository) {
   if (!isJsonContentType(request.headers.get('content-type'))) {
     return errorResponse('Content-Type must be application/json', 415)
@@ -49,6 +56,12 @@ export async function createUserHandler(request: Request, repository: UserReposi
   }
 }
 
+/**
+ * Lists up to 100 newest users through the injected repository.
+ *
+ * @param repository - User persistence boundary.
+ * @returns A validated, non-cacheable public response or a generic server error.
+ */
 export async function listUsersHandler(repository: UserRepository) {
   try {
     const records = await repository.listNewest(100)
