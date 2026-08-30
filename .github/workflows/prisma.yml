@@ -8,6 +8,10 @@ on:
       - 'package.json'
       - 'prisma.config.ts'
       - 'prisma/**'
+      - 'src/lib/db.ts'
+      - 'src/lib/env.ts'
+      - 'src/lib/users/**'
+      - 'tests/integration/**'
   push:
     branches: [main]
     paths:
@@ -15,6 +19,10 @@ on:
       - 'package.json'
       - 'prisma.config.ts'
       - 'prisma/**'
+      - 'src/lib/db.ts'
+      - 'src/lib/env.ts'
+      - 'src/lib/users/**'
+      - 'tests/integration/**'
   schedule:
     - cron: '0 6 * * 1'
   workflow_dispatch:
@@ -59,5 +67,6 @@ jobs:
       - run: bun run db:validate
       - run: bun run db:migrate:deploy
       - run: bun run db:migrate:status
+      - run: bun run test:integration
       - name: Verify migration history matches the schema
         run: bun run db:migrate:check

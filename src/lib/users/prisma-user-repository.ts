@@ -17,14 +17,28 @@ const publicUserSelect = {
 } satisfies Prisma.UserSelect
 
 function isEmailUniqueConstraint(error: Prisma.PrismaClientKnownRequestError) {
-  if (error.code !== 'P2002') {
+  if (error.code !== 'P2002' || error.meta?.['modelName'] !== 'User') {
     return false
   }
 
-  const target = error.meta?.['target']
-  return Array.isArray(target)
-    ? target.includes('email')
-    : typeof target === 'string' && target.includes('email')
+  const target = error.meta['target']
+  if (
+    (Array.isArray(target) && target.includes('email')) ||
+    (typeof target === 'string' && target.includes('email'))
+  ) {
+    return true
+  }
+
+  const driverError = error.meta['driverAdapterError']
+  if (!(driverError instanceof Error) || typeof driverError.cause !== 'object') {
+    return false
+  }
+
+  const cause = driverError.cause as { constraint?: { fields?: unknown; index?: unknown } }
+  return (
+    cause.constraint?.index === 'users_email_key' ||
+    (Array.isArray(cause.constraint?.fields) && cause.constraint.fields.includes('email'))
+  )
 }
 
 export function createPrismaUserRepository(client: PrismaClient): UserRepository {

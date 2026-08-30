@@ -18,7 +18,13 @@ import tailwindcssPlugin from 'eslint-plugin-tailwindcss'
 import unicornModule from 'eslint-plugin-unicorn'
 
 const unicornPlugin = unicornModule.default ?? unicornModule
-const sourceFiles = ['src/**/*.{ts,tsx}', 'prisma/**/*.ts', 'next.config.ts', 'prisma.config.ts']
+const sourceFiles = [
+  'src/**/*.{ts,tsx}',
+  'tests/**/*.ts',
+  'prisma/**/*.ts',
+  'next.config.ts',
+  'prisma.config.ts',
+]
 const reactFiles = ['src/**/*.{ts,tsx}']
 
 export default [
@@ -174,7 +180,7 @@ export default [
     },
   },
   {
-    files: ['prisma/seed.ts', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+    files: ['prisma/seed.ts', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', '**/*.integration.ts'],
     rules: {
       '@typescript-eslint/no-floating-promises': 'off',
       'no-console': 'off',

@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit --skipLibCheck",
     "test": "bun test",
     "test:coverage": "bun test --coverage",
+    "test:integration": "bun test ./tests/integration/*.integration.ts",
     "knip": "knip",
     "knip:fix": "knip --fix",
     "knip:production": "knip --production",
