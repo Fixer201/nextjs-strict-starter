@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 import { Prisma } from '@/generated/prisma/client'
 import { db } from '@/lib/db'
+import { isJsonContentType } from '@/lib/http/content-type'
 import { publicUserSelect } from '@/lib/users'
 import { createUserSchema, toUserResponse, userListSchema } from '@/lib/validations/user'
 
-const JSON_CONTENT_TYPE_PATTERN = /^application\/json(?:\s*;|$)/iu
 const NO_STORE_HEADERS = { 'Cache-Control': 'no-store' }
 
 function errorResponse(error: string, status: number) {
@@ -14,7 +14,7 @@ function errorResponse(error: string, status: number) {
 export async function POST(request: Request) {
   const contentType = request.headers.get('content-type')
 
-  if (contentType === null || !JSON_CONTENT_TYPE_PATTERN.test(contentType)) {
+  if (!isJsonContentType(contentType)) {
     return errorResponse('Content-Type must be application/json', 415)
   }
 
