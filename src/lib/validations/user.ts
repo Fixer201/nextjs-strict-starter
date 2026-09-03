@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { UserRecord } from '@/lib/users/user-repository'
 
 export const createUserSchema = z
   .object({
@@ -19,14 +20,13 @@ export const userSchema = z
 
 export const userListSchema = z.array(userSchema).max(100)
 
-interface UserRecord {
-  createdAt: Date
-  email: string
-  id: string
-  name: null | string
-  updatedAt: Date
-}
-
+/**
+ * Converts a database-facing user record into the validated public API shape.
+ *
+ * @param user - Repository record containing Date instances.
+ * @returns A public user with ISO timestamps.
+ * @throws When the record does not satisfy the public user schema.
+ */
 export function toUserResponse(user: UserRecord) {
   return userSchema.parse({
     createdAt: user.createdAt.toISOString(),

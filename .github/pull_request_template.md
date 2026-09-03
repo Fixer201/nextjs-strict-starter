@@ -13,13 +13,8 @@
 
 ## Quality gates passed
 
-- [ ] `npm run format` — no formatting changes required
-- [ ] `npm run lint:ci` — 0 errors and 0 warnings
-- [ ] `npm run typecheck` — 0 type errors
-- [ ] `npm run test:coverage` — tests and thresholds pass
-- [ ] `npm run knip` — 0 dead code
-- [ ] `npm run db:validate` — schema valid
-- [ ] `npm run build` — build succeeds
+- [ ] `bun run verify` — formatting, lint, types, unit coverage, dead code, Prisma schema, and build pass
+- [ ] `bun run test:integration` and `bun run db:migrate:check` pass when database code changes
 
 ## Security checklist
 

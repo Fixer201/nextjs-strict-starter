@@ -1,18 +1,16 @@
 import { db } from '@/lib/db'
-import { publicUserSelect } from '@/lib/users'
+import { createPrismaUserRepository } from '@/lib/users/prisma-user-repository'
 import { toUserResponse, userListSchema } from '@/lib/validations/user'
 
 export const dynamic = 'force-dynamic'
+
+const userRepository = createPrismaUserRepository(db)
 
 export default async function Home() {
   let users
 
   try {
-    const records = await db.user.findMany({
-      orderBy: { createdAt: 'desc' },
-      select: publicUserSelect,
-      take: 10,
-    })
+    const records = await userRepository.listNewest(10)
     users = userListSchema.parse(records.map((record) => toUserResponse(record)))
   } catch (error: unknown) {
     throw new Error('Failed to load users from the database', { cause: error })
@@ -21,7 +19,7 @@ export default async function Home() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col p-8">
       <h1 className="mb-6 text-3xl font-medium tracking-tight text-text-h">
-        Next.js Linting Template
+        Next.js Strict Starter
       </h1>
       <p className="mb-8">
         Strict Next.js, Prisma, and Tailwind starter. This page reads users from PostgreSQL and
@@ -33,7 +31,7 @@ export default async function Home() {
         {users.length === 0 ? (
           <p className="text-text">
             No users yet. Run{' '}
-            <code className="rounded bg-code-bg px-2 py-1 font-mono text-sm">npm run db:seed</code>{' '}
+            <code className="rounded bg-code-bg px-2 py-1 font-mono text-sm">bun run db:seed</code>{' '}
             to add demo data.
           </p>
         ) : (

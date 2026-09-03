@@ -9,28 +9,20 @@ pre-commit:
         fi
         gitleaks protect --staged --verbose
     lint-staged:
-      run: npx lint-staged
+      run: bunx --bun lint-staged
 pre-push:
   parallel: false
   commands:
-    knip:
-      run: npx knip
-    typecheck:
-      run: npm run typecheck
-    test:
-      run: npm test
-    prisma-validate:
-      run: npm run db:validate
-    build:
-      run: npm run build
+    verify:
+      run: bun run verify
 post-merge:
   commands:
     install:
-      glob: 'package-lock.json'
-      run: npm install
+      glob: 'bun.lock'
+      run: bun install --frozen-lockfile
 post-checkout:
   commands:
     install:
-      glob: 'package-lock.json'
+      glob: 'bun.lock'
       files: 'git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD 2>/dev/null || git show --name-only --pretty=format: HEAD'
-      run: npm install
+      run: bun install --frozen-lockfile
