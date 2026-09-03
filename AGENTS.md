@@ -5,18 +5,19 @@ toolchain; when commands or architecture change, update this file and `README.md
 
 ## Toolchain
 
-| Concern        | Tool / command                              |
-| -------------- | ------------------------------------------- |
-| Runtime        | Node.js 24+, Bun 1.4+                       |
-| Framework      | Next.js App Router, React Server Components |
-| Types          | `bun run typecheck`                         |
-| Lint           | `bun run lint:ci`                           |
-| Format         | `bun run format` / `bun run format:fix`     |
-| Tests          | `bun run test` / `bun run test:coverage`    |
-| Dead code      | `bun run knip`                              |
-| Database       | Prisma 7 and PostgreSQL                     |
-| Full fast gate | `bun run check`                             |
-| Production     | `bun run build`                             |
+| Concern          | Tool / command                              |
+| ---------------- | ------------------------------------------- |
+| Runtime          | Node.js 24+, Bun 1.4+                       |
+| Framework        | Next.js App Router, React Server Components |
+| Types            | `bun run typecheck`                         |
+| Lint             | `bun run lint:ci`                           |
+| Format           | `bun run format` / `bun run format:fix`     |
+| Tests            | `bun run test` / `bun run test:coverage`    |
+| Dead code        | `bun run knip`                              |
+| Database         | Prisma 7 and PostgreSQL                     |
+| Full fast gate   | `bun run check`                             |
+| Full local gate  | `bun run verify`                            |
+| Production build | `bun run build`                             |
 
 Use `bun install`; the dependency graph must resolve without `--force`. CI uses `bun ci`, and local
 reproducibility checks use `bun install --frozen-lockfile`.
@@ -29,7 +30,7 @@ reproducibility checks use `bun install --frozen-lockfile`.
 3. Change the smallest coherent set of files.
 4. Add or update tests for behavior changes.
 5. Run `bun run format:fix`, then `bun run check`.
-6. Run `bun run build` when application, dependency, environment, or Next.js configuration changed.
+6. Run `bun run verify` before pushing application, dependency, environment, or Next.js changes.
 7. For schema changes, create and commit a migration; never report schema work complete with only
    `db:push`.
 
@@ -130,6 +131,7 @@ Tests use `bun:test` and strict assertions. Keep tests next to the code they cov
 - Test boundary normalization and rejection paths, not only happy paths.
 - Avoid implementation-only mocks when a pure function can be tested directly.
 - Add integration coverage for database behavior that cannot be proven by schemas.
+- Run `bun run test:integration` against an already migrated PostgreSQL database for database code.
 - Keep the coverage thresholds meaningful; do not lower them to merge a change.
 
 ## Dependency and configuration changes
@@ -143,13 +145,8 @@ fallbacks to a quality gate.
 
 ## Completion checklist
 
-- `bun run format` passes.
-- `bun run lint:ci` passes with zero warnings.
-- `bun run typecheck` passes.
-- `bun run test:coverage` passes.
-- `bun run knip` passes.
-- `bun run db:validate` passes.
-- `bun run build` passes when relevant.
+- `bun run verify` passes.
+- `bun run test:integration` and `bun run db:migrate:check` pass for database changes.
 - Schema changes include a migration and pass the migration workflow logic.
 - The diff contains no secrets, generated Prisma client, unsafe type escapes, or unrelated changes.
 - Documentation matches the implemented commands and behavior.

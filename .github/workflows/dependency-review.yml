@@ -1,6 +1,6 @@
 # Dependency Review — scans every PR for vulnerable dependencies.
 # If a PR adds a package with a known CVE, the check fails.
-# Complements npm audit (which runs on current state, not the delta).
+# Complements bun audit (which runs on current state, not the delta).
 # Docs: https://github.com/actions/dependency-review-action
 
 name: Dependency Review
