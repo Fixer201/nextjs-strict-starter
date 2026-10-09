@@ -146,6 +146,18 @@ only their own fixture users and do not depend on seed data.
 Content Security Policy and HSTS are deployment-specific edge responsibilities because HTTPS,
 origins, and nonce handling are not known to a generic starter.
 
+The `tinypool` override requires version 2.1.2 or newer within 2.x because `oxfmt` 0.59.0 pins
+vulnerable version 2.1.0. It addresses
+[worker option injection](https://github.com/advisories/GHSA-5gmw-xhrv-c9v3) and
+[run option injection](https://github.com/advisories/GHSA-85c8-ppgw-ccpr). Remove the override once
+the formatter itself requires a patched version.
+
+As of October 9, 2026, `bun audit` still reports
+[GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) for `braces` 3.0.3 through
+`@next/eslint-plugin-next` → `fast-glob` → `micromatch`. No patched `braces` release is available,
+and the latest Next.js ESLint plugin still uses this dependency chain. The dependency audit remains
+failing; the advisory is not suppressed. These packages are development dependencies used by linting.
+
 ## Adopting the Template
 
 Replace the demo UI, user model, package metadata, database credentials, and repository links. Add

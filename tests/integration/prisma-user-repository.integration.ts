@@ -49,6 +49,6 @@ describe('Prisma user repository', () => {
     const input = { email: FIXTURE_EMAILS[1], name: null }
     await repository.create(input)
 
-    expect(repository.create(input)).rejects.toBeInstanceOf(DuplicateEmailError)
+    return expect(repository.create(input)).rejects.toBeInstanceOf(DuplicateEmailError)
   })
 })
